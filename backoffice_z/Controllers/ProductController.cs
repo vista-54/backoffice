@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using backoffice_z.Models;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 namespace backoffice_z.Controllers
 {
     [Route("api/[controller]")]
@@ -44,9 +44,41 @@ namespace backoffice_z.Controllers
             _product.ProductStatus = status;
             _context.Products.Update(_product);
             _context.SaveChanges();
-            return Ok(_context.Products);
+            Workflow currentWorkflow = GetWorkflow(session);
+            if (RunWorkflow(currentWorkflow, _product) != 0)
+            {
+                return Ok("Product has been bought");
+            }
+            return Ok("Unknown error");
         }
-
+        private int RunWorkflow(Workflow workflow, Product product)
+        {
+            string applications = workflow.Applications;
+            JToken applicationsObject = JToken.Parse(applications);
+            App app = GetAppInfo(product);
+            if (applicationsObject.Value<string>("Backoffice") != null)
+            {
+                string shopJson = (string)applicationsObject["Backoffice"];
+                JToken productsObject = JToken.Parse(shopJson);
+                string productsArrJson = (string)productsObject["Products"];
+                JArray productsArr = JArray.Parse(productsArrJson);
+                string productJson = JsonConvert.SerializeObject(product);
+                JToken productObject = JToken.Parse(productJson);
+                productsArr.Add(productObject);
+                string productsJson = JsonConvert.SerializeObject(productsArr);
+                productsObject["Products"] = productsJson;
+                string productsObjectJson = JsonConvert.SerializeObject(productsObject);
+                applicationsObject["Backoffice"] = productsObjectJson;
+            }
+            else
+            {
+                applicationsObject["Backoffice"] = JsonConvert.SerializeObject(app);
+            }
+            workflow.Applications = JsonConvert.SerializeObject(applicationsObject);
+            workflow.CurrentStage = "Backoffice";
+            _context.Workflows.Update(workflow);
+            return _context.SaveChanges();
+        }
 
 
         private User GetUser()
@@ -61,5 +93,24 @@ namespace backoffice_z.Controllers
         {
             return _context.Products.FirstOrDefault(x => x.Id == Id);
         }
+
+        private Workflow GetWorkflow(string session)
+        {
+            Workflow workflow = _context.Workflows.FirstOrDefault(x => x.Session == session);
+            return workflow;
+        }
+        private App GetAppInfo(Product order)
+        {
+            App app = new App();
+            app.Name = "Back Office";
+            app.Version = "1.0.0";
+            app.StartedAt = DateTime.UtcNow.ToString();
+            app.Action = "Status chnaged";
+            Product[] products = new Product[1];
+            products[0] = order;
+            app.Products = JsonConvert.SerializeObject(products);
+            return app;
+        }
+
     }
 }
