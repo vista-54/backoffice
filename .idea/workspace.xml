@@ -11,11 +11,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
               <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backoffice_z/wwwroot/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="231" column="68" lean-forward="false" selection-start-line="231" selection-start-column="55" selection-end-line="231" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -81,6 +91,17 @@
               <item name="backoffice_z" type="b2602c69:ProjectViewProjectNode" />
               <item name="backoffice_z" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
+            <path>
+              <item name="backoffice_z" type="b2602c69:ProjectViewProjectNode" />
+              <item name="backoffice_z" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="backoffice_z" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="backoffice_z" type="b2602c69:ProjectViewProjectNode" />
+              <item name="backoffice_z" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="backoffice_z" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="wwwroot" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -125,12 +146,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1537047901866</updated>
-      <workItem from="1537047903505" duration="133000" />
+      <workItem from="1537047903505" duration="305000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133000" />
+    <option name="totallyTimeSpent" value="305000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -172,6 +193,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backoffice_z/wwwroot/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="231" column="68" lean-forward="false" selection-start-line="231" selection-start-column="55" selection-end-line="231" selection-end-column="68" />
           <folding />
         </state>
       </provider>
