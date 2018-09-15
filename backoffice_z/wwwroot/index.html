@@ -229,15 +229,15 @@
                 $($(tmpRow).find('#created_at')).text(item.createdAt);
                 $($(tmpRow).find('#customer_name')).text(customer[0]);
                 $($(tmpRow).find('#customer_surname')).text(typeof customer[1] !== 'undefined' ? customer[1] : '');
-                $($(tmpRow).find('#status')).text(item.productStatus);
+                $($(tmpRow).find('.product_status')).text(item.productStatus);
+                $($(tmpRow).find('.product_status')).click(function () {
+                    $(this).text("Assigned to me");
+                    debugger
+                })
                 $('#table_body').append(tmpRow);
             })
         }
 
-        $(".product_status").click(function () {
-            $(this).text("Assigned to me");
-            debugger
-        })
     })();
 </script>
 </body>
