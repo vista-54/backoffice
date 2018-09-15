@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kundenportal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="flex-wrap space-between">
+        <div class="logo-block">
+            <a href="#">
+                <img src="img/logo.png" alt="logo">
+            </a>
+        </div>
+        <!--<div class="header-title">
+            <h1>Dashboard</h1>
+        </div>-->
+        <div class="user-block">
+            <div class="user-active">
+                <img src="img/user-icon.png" alt="user-icon">
+
+                <p>user@customer.ch</p>
+
+                <div class="logout-btn"><img src="img/chevron-down.png" alt=""></div>
+                <div class="user-options-block">
+                    <a href="#">Edit profile</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+            <!--<div class="btn-custom">
+                Login
+            </div>-->
+        </div>
+    </header>
+    <h1>Dashboard</h1>
+    <hr>
+    <div class="form-item-title">
+        <h5>Orders Quick Filter</h5>
+    </div>
+    <div class="filters-row">
+        <p class="filters-row-title">Assginement</p>
+
+        <div class="filters-checkbox-wrap">
+            <label>
+                <input type="checkbox">
+                assigned to me
+            </label>
+            <label>
+                <input type="checkbox">
+                unassigned
+            </label>
+            <label>
+                <input type="checkbox">
+                assigned to other
+            </label>
+        </div>
+    </div>
+    <div class="filters-row">
+        <p class="filters-row-title">Status</p>
+
+        <div class="filters-checkbox-wrap">
+            <label>
+                <input type="checkbox">
+                open
+            </label>
+            <label>
+                <input type="checkbox">
+                verifcation
+            </label>
+            <label>
+                <input type="checkbox">
+                rejected
+            </label>
+            <label>
+                <input type="checkbox">
+                processing
+            </label>
+            <label>
+                <input type="checkbox">
+                active
+            </label>
+            <label>
+                <input type="checkbox">
+                cancelled
+            </label>
+            <label>
+                <input type="checkbox">
+                locked
+            </label>
+            <label>
+                <input type="checkbox">
+                lost
+            </label>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table class="form-table table-bg dashboard-tab">
+            <thead>
+            <tr>
+                <th><p>Order No</p></th>
+                <th><p>First name</p></th>
+                <th><p>Last Name</p></th>
+                <th><p>Company</p></th>
+                <th><p>Product Type</p></th>
+                <th><p>Product</p></th>
+                <th><p>Order Date</p></th>
+                <th><p>Valid From</p></th>
+                <th><p>Status</p></th>
+                <th><p>Actions</p></th>
+            </tr>
+            <tr>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody id="table_body">
+            <tr>
+            <tr id="product_row">
+                <td id="id">
+                    100101
+                </td>
+                <td id="customer_name">
+                    Donald
+                </td>
+                <td id="customer_surname">
+                    Duck
+                </td>
+                <td id="company">
+                    Swiss
+                </td>
+                <td id="product_type">
+                    Produkt
+                </td>
+                <td id="product_name">
+                    Flughafenausw
+                    eis
+                </td>
+                <td id="created_at">
+                    01.01.2018
+                </td>
+                <td>
+                    01.02.2018
+                </td>
+                <td class="product_status" style="cursor: pointer">
+                    open
+                </td>
+                <td class="dashboard-actions">
+                    <button class="dashboard-action-btn"><img src="img/search-icon-wht.png" alt="search-icon"></button>
+                    <button class="dashboard-action-btn"><img src="img/edit.png" alt="edit-icon"></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="flex-wrap space-between">
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">&raquo;</a>
+        </div>
+        <div class="lines-counter-wrap">
+            <span>Lines</span>
+            <span class="line-counter">10</span>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    (function () {
+     var location_data =
+            location.search
+                .slice(1)
+                .split('&')
+                .map(p => p.split('='))
+                .reduce((obj, [key, value]) => ({...obj, [key]: value}), {});
+
+        var session;
+
+        if (typeof location_data.session == 'undefined') {
+            session = localStorage.session;
+        } else {
+            session = location_data.session;
+            localStorage.session = location_data.session;
+        }
+
+        getProducts();
+
+
+        function getProducts() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://188.166.43.153:8002/api/product?session=' + session, true);
+
+            xhr.onreadystatechange = function () {//Вызывает функцию при смене состояния.
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    showProducts(JSON.parse(xhr.responseText));
+                }
+            };
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send();
+        }
+
+        function showProducts(data) {
+            var row = $('#product_row');
+            $('#table_body').empty();
+            data.forEach(function (item) {
+    var tmpRow = $(row).clone();
+                var customer = item.customer.split(' ');
+                $($(tmpRow).find('#id')).text(item.id);
+                $($(tmpRow).find('#company')).text(item.companyName);
+                $($(tmpRow).find('#product_name')).text(item.productName);
+                $($(tmpRow).find('#created_at')).text(item.createdAt);
+                $($(tmpRow).find('#customer_name')).text(customer[0]);
+                $($(tmpRow).find('#customer_surname')).text(typeof customer[1] !== 'undefined' ? customer[1] : '');
+                $($(tmpRow).find('#status')).text(item.productStatus);
+                $('#table_body').append(tmpRow);
+            })
+        }
+
+        $(".product_status").click(function () {
+            $(this).text("Assigned to me");
+            debugger
+        })
+    })();
+</script>
+</body>
+</html>
