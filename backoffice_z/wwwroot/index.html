@@ -206,7 +206,7 @@
 
         function getProducts() {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://188.166.43.153:8002/api/product?session=' + session, true);
+            xhr.open('GET', 'http://188.166.43.153:8003/api/product?session=' + session, true);
 
             xhr.onreadystatechange = function () {//Вызывает функцию при смене состояния.
                 if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
