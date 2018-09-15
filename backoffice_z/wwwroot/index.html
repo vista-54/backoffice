@@ -185,7 +185,7 @@
 
 <script>
     (function () {
-     var location_data =
+        var location_data =
             location.search
                 .slice(1)
                 .split('&')
@@ -221,7 +221,7 @@
             var row = $('#product_row');
             $('#table_body').empty();
             data.forEach(function (item) {
-    var tmpRow = $(row).clone();
+                var tmpRow = $(row).clone();
                 var customer = item.customer.split(' ');
                 $($(tmpRow).find('#id')).text(item.id);
                 $($(tmpRow).find('#company')).text(item.companyName);
@@ -232,11 +232,26 @@
                 $($(tmpRow).find('.product_status')).text(item.productStatus);
                 $($(tmpRow).find('.product_status')).click(function () {
                     $(this).text("Assigned to me");
-                    debugger
+                    var id = $($(this).parent()).find('#id').text();
+                    changeStatus(id, "Assigned to me");
                 })
                 $('#table_body').append(tmpRow);
             })
         }
+
+        function changeStatus(product_id, status) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('PUT', 'http://188.166.43.153:8003/api/product?session=' + session + "&productId=" + product_id + "&status=" + status, true);
+
+            xhr.onreadystatechange = function () {//Вызывает функцию при смене состояния.
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    showProducts(JSON.parse(xhr.responseText));
+                }
+            };
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send();
+        }
+
 
     })();
 </script>
